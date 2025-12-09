@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import type { Task, TaskStatus, NewTaskInput } from '@/types/Task';
-import { db } from '@/lib/firebase';
-import { useAuth } from '@/lib/AuthContext';
+import { useEffect, useState, useMemo, useCallback } from "react";
+import type { Task, TaskStatus, NewTaskInput } from "@/types/Task";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/lib/AuthContext";
 import {
   collection,
   addDoc,
@@ -13,12 +13,12 @@ import {
   onSnapshot,
   query,
   where,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
 const deriveStatus = (completed: boolean, archived: boolean): TaskStatus => {
-  if (archived) return 'archived';
-  if (completed) return 'completed';
-  return 'active';
+  if (archived) return "archived";
+  if (completed) return "completed";
+  return "active";
 };
 
 export const useTasks = () => {
@@ -29,8 +29,8 @@ export const useTasks = () => {
   useEffect(() => {
     if (!user) return;
 
-    const tasksRef = collection(db, 'tasks');
-    const q = query(tasksRef, where('userId', '==', user.uid));
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("userId", "==", user.uid));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const nextTasks: Task[] = snapshot.docs.map((docSnap) => {
@@ -38,14 +38,17 @@ export const useTasks = () => {
 
         return {
           id: docSnap.id,
-          title: (data.title as string) ?? '',
-          description: (data.description as string) ?? '',
+          title: (data.title as string) ?? "",
+          description: (data.description as string) ?? "",
           completed: (data.completed as boolean) ?? false,
           archived: (data.archived as boolean) ?? false,
           status:
             (data.status as TaskStatus | undefined) ??
-            deriveStatus((data.completed as boolean) ?? false, (data.archived as boolean) ?? false),
-          createdAt: (data.createdAt as string) ?? '',
+            deriveStatus(
+              (data.completed as boolean) ?? false,
+              (data.archived as boolean) ?? false,
+            ),
+          createdAt: (data.createdAt as string) ?? "",
           updatedAt: (data.updatedAt as string | undefined) ?? undefined,
           dueDate: (data.dueDate as string | null | undefined) ?? undefined,
         };
@@ -65,19 +68,19 @@ export const useTasks = () => {
 
       const now = new Date().toISOString();
 
-      await addDoc(collection(db, 'tasks'), {
+      await addDoc(collection(db, "tasks"), {
         userId: user.uid,
         title: input.title,
-        description: input.description ?? '',
+        description: input.description ?? "",
         completed: false,
         archived: false,
-        status: 'active',
+        status: "active",
         createdAt: now,
         updatedAt: now,
         dueDate: input.dueDate ?? null,
       });
     },
-    [user]
+    [user],
   );
 
   const toggleComplete = useCallback(
@@ -88,13 +91,13 @@ export const useTasks = () => {
       const completed = !task.completed;
       const status = deriveStatus(completed, task.archived);
 
-      await updateDoc(doc(db, 'tasks', id), {
+      await updateDoc(doc(db, "tasks", id), {
         completed,
         status,
         updatedAt: new Date().toISOString(),
       });
     },
-    [tasks]
+    [tasks],
   );
 
   const archiveTask = useCallback(
@@ -105,13 +108,13 @@ export const useTasks = () => {
       const archived = true;
       const status = deriveStatus(task.completed, archived);
 
-      await updateDoc(doc(db, 'tasks', id), {
+      await updateDoc(doc(db, "tasks", id), {
         archived,
         status,
         updatedAt: new Date().toISOString(),
       });
     },
-    [tasks]
+    [tasks],
   );
 
   const unarchiveTask = useCallback(
@@ -122,29 +125,23 @@ export const useTasks = () => {
       const archived = false;
       const status = deriveStatus(task.completed, archived);
 
-      await updateDoc(doc(db, 'tasks', id), {
+      await updateDoc(doc(db, "tasks", id), {
         archived,
         status,
         updatedAt: new Date().toISOString(),
       });
     },
-    [tasks]
+    [tasks],
   );
 
   const deleteTask = useCallback(async (id: string) => {
-    await deleteDoc(doc(db, 'tasks', id));
+    await deleteDoc(doc(db, "tasks", id));
   }, []);
 
   // Handy slices
-  const activeTasks = useMemo(
-    () => tasks.filter((t) => !t.archived),
-    [tasks]
-  );
+  const activeTasks = useMemo(() => tasks.filter((t) => !t.archived), [tasks]);
 
-  const archivedTasks = useMemo(
-    () => tasks.filter((t) => t.archived),
-    [tasks]
-  );
+  const archivedTasks = useMemo(() => tasks.filter((t) => t.archived), [tasks]);
 
   return {
     user,

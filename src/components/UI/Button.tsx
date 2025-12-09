@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-export type ButtonVariant = 'primary' | 'soft' | 'ghost' | 'outline' | 'danger';
+export type ButtonVariant = "primary" | "soft" | "ghost" | "outline" | "danger";
 
-export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
   fullWidth?: boolean;
   icon?: ReactNode;
-  iconPosition?: 'left' | 'right';
+  iconPosition?: "left" | "right";
   iconOnly?: boolean; // explicit icon-only hint (but inferred if icon + no label)
   eventName?: string;
   eventTags?: string[];
@@ -33,7 +32,7 @@ export const Button = ({
   fullWidth,
   className,
   icon,
-  iconPosition = 'left',
+  iconPosition = "left",
   iconOnly = false,
   eventName,
   eventTags,
@@ -54,22 +53,22 @@ export const Button = ({
   const isPlainMode = !!plain;
 
   // Variant resolution for normal buttons
-  let variantClass = 'ui-btn-primary';
+  let variantClass = "ui-btn-primary";
 
   if (soft) {
-    variantClass = 'ui-btn-soft';
+    variantClass = "ui-btn-soft";
   }
   if (ghost) {
-    variantClass = 'ui-btn-ghost';
+    variantClass = "ui-btn-ghost";
   }
   if (outline) {
-    variantClass = 'ui-btn-outline';
+    variantClass = "ui-btn-outline";
   }
   if (danger) {
-    variantClass = 'ui-btn-danger';
+    variantClass = "ui-btn-danger";
   }
   if (primary) {
-    variantClass = 'ui-btn-primary';
+    variantClass = "ui-btn-primary";
   }
 
   // Icon-only if:
@@ -78,11 +77,10 @@ export const Button = ({
   const isIconOnly = !!icon && (iconOnly || !label);
 
   // Full-width only makes sense for non-icon-only, non-plain buttons
-  const widthClass =
-    fullWidth && !isIconOnly && !isPlainMode ? 'w-full' : '';
+  const widthClass = fullWidth && !isIconOnly && !isPlainMode ? "w-full" : "";
 
   const iconWrapperClass =
-    'inline-flex items-center justify-center text-[16px] leading-none';
+    "inline-flex items-center justify-center text-[16px] leading-none";
 
   const content =
     isIconOnly && icon ? (
@@ -92,11 +90,11 @@ export const Button = ({
       </>
     ) : (
       <span className="inline-flex items-center justify-center gap-1.5">
-        {icon && iconPosition === 'left' && (
+        {icon && iconPosition === "left" && (
           <span className={iconWrapperClass}>{icon}</span>
         )}
         {label && <span>{label}</span>}
-        {icon && iconPosition === 'right' && (
+        {icon && iconPosition === "right" && (
           <span className={iconWrapperClass}>{icon}</span>
         )}
       </span>
@@ -104,45 +102,42 @@ export const Button = ({
 
   // For styled icon-only buttons: use ui-btn-icon to make them square
   const shapeClass =
-    !isPlainMode && !isTextMode && isIconOnly ? 'ui-btn-icon' : '';
+    !isPlainMode && !isTextMode && isIconOnly ? "ui-btn-icon" : "";
 
   // Text-mode color: variant influences text color
-  let textColorClass = '';
+  let textColorClass = "";
   if (isTextMode) {
     if (danger) {
-      textColorClass = 'text-danger hover:text-danger/85';
+      textColorClass = "text-danger hover:text-danger/85";
     } else if (primary || soft) {
-      textColorClass = 'text-accent hover:text-accent/85';
+      textColorClass = "text-accent hover:text-accent/85";
     } else if (ghost) {
-      textColorClass = 'text-muted hover:text-fg';
+      textColorClass = "text-muted hover:text-fg";
     } else {
-      textColorClass = 'text-fg hover:text-fg/80';
+      textColorClass = "text-fg hover:text-fg/80";
     }
   }
 
   const baseClass = isPlainMode
-    ? 'inline-flex items-center justify-center text-xs'
+    ? "inline-flex items-center justify-center text-xs"
     : isTextMode
-      ? 'inline-flex items-center justify-center text-xs font-medium'
-      : 'ui-btn';
+      ? "inline-flex items-center justify-center text-xs font-medium"
+      : "ui-btn";
 
   const finalClassName = [
     baseClass,
     !isPlainMode && !isTextMode && variantClass,
     !isPlainMode && !isTextMode && widthClass,
     !isPlainMode && !isTextMode && shapeClass,
-    isTextMode && 'px-0 py-0',
+    isTextMode && "px-0 py-0",
     isTextMode && textColorClass,
     className,
   ]
     .filter(Boolean)
-    .join(' ');
+    .join(" ");
 
   return (
-    <button
-      {...rest}
-      className={finalClassName}
-    >
+    <button {...rest} className={finalClassName}>
       {content}
     </button>
   );

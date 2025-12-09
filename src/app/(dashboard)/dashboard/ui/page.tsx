@@ -1,19 +1,15 @@
-'use client';
+"use client";
 
-import { Button, Card, Input, ColorPicker } from "@/ui"
-import { useState } from 'react';
-import { Plus as PlusIcon} from 'lucide-react';
+import { Button, Card, Input, ColorPicker } from "@/ui";
+import { useState } from "react";
+import { Plus as PlusIcon } from "lucide-react";
 import { Container } from "@/ui";
 
-
-
 export default function HomePage() {
-
-    const [color, setColor] = useState('rgb(251, 191, 36)'); // mango default
+  const [color, setColor] = useState("rgb(251, 191, 36)"); // mango default
 
   return (
     <Container className="flex items-center justify-center p-4">
-
       <Card className="space-y-4">
         <header className="space-y-1">
           <h1 className="text-base font-semibold">UI Component Showcase</h1>
@@ -54,12 +50,7 @@ export default function HomePage() {
               icon={<PlusIcon />}
               iconPosition="left"
             />
-            <Button
-              label="New"
-              soft
-              icon={<PlusIcon />}
-              iconPosition="left"
-            />
+            <Button label="New" soft icon={<PlusIcon />} iconPosition="left" />
             <Button
               label="Edit"
               ghost
@@ -91,12 +82,7 @@ export default function HomePage() {
               iconOnly
               aria-label="Add (primary)"
             />
-            <Button
-              soft
-              icon={<PlusIcon />}
-              iconOnly
-              aria-label="Add (soft)"
-            />
+            <Button soft icon={<PlusIcon />} iconOnly aria-label="Add (soft)" />
             <Button
               ghost
               icon={<PlusIcon />}
@@ -122,9 +108,8 @@ export default function HomePage() {
           <h2 className="text-xs font-semibold text-muted uppercase tracking-wide">
             Colour Picker
           </h2>
-          <ColorPicker value={color} onChange={setColor}/>
+          <ColorPicker value={color} onChange={setColor} />
         </section>
-
       </Card>
     </Container>
   );

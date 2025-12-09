@@ -1,6 +1,6 @@
-import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
-import {Container, Button} from '@/ui';
-import { useAuth } from '@/lib/AuthContext';
+import { PanelLeftOpen, PanelLeftClose } from "lucide-react";
+import { Container, Button } from "@/ui";
+import { useAuth } from "@/lib/AuthContext";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -9,8 +9,8 @@ interface HeaderProps {
 
 export const Header = ({ toggleSidebar, sidebarOpen }: HeaderProps) => {
   const { user } = useAuth();
-  const displayName = user?.displayName || 'User';
-  const label = sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar';
+  const displayName = user?.displayName || "User";
+  const label = sidebarOpen ? "Collapse sidebar" : "Expand sidebar";
 
   return (
     <Container className="shrink-0 shadow-xs bg-surface/80 backdrop-blur-sm flex flex-row h-14 px-3 items-center gap-4">

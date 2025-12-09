@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
-import { auth } from '@/lib/firebase';
-import { useAuth } from '@/lib/AuthContext';
-import { Container, Card, Input, Button } from '@/ui';
+import { useState, useEffect, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import { auth } from "@/lib/firebase";
+import { useAuth } from "@/lib/AuthContext";
+import { Container, Card, Input, Button } from "@/ui";
 
 export default function LoginPage() {
   const router = useRouter();
   const { user } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export default function LoginPage() {
   // If user is already logged in, bounce them to dashboard
   useEffect(() => {
     if (user) {
-      router.replace('/dashboard');
+      router.replace("/dashboard");
     }
   }, [user, router]);
 
@@ -33,23 +33,23 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
       // Successful login → go to dashboard, no login in history
-      router.replace('/dashboard');
+      router.replace("/dashboard");
     } catch (err: unknown) {
       let message =
-        'Could not sign you in. Please check your details and try again.';
+        "Could not sign you in. Please check your details and try again.";
 
       if (err instanceof FirebaseError) {
         switch (err.code) {
-          case 'auth/invalid-credential':
-          case 'auth/wrong-password':
-          case 'auth/user-not-found':
-            message = 'Invalid email or password.';
+          case "auth/invalid-credential":
+          case "auth/wrong-password":
+          case "auth/user-not-found":
+            message = "Invalid email or password.";
             break;
-          case 'auth/too-many-requests':
-            message = 'Too many attempts. Please wait a bit and try again.';
+          case "auth/too-many-requests":
+            message = "Too many attempts. Please wait a bit and try again.";
             break;
           default:
-            console.error('Firebase auth error', {
+            console.error("Firebase auth error", {
               code: err.code,
               message: err.message,
             });
@@ -57,7 +57,7 @@ export default function LoginPage() {
       } else if (err instanceof Error) {
         console.error(err);
       } else {
-        console.error('Unknown sign-in error', err);
+        console.error("Unknown sign-in error", err);
       }
 
       setError(message);
@@ -104,18 +104,14 @@ export default function LoginPage() {
             disabled={disabled}
           />
 
-          {error && (
-            <p className="text-xs text-danger">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-xs text-danger">{error}</p>}
 
           <Button
             type="submit"
             primary
             className="w-full mt-2"
             disabled={disabled || !email.trim() || !password}
-            label={isSubmitting ? 'Signing in…' : 'Sign in'}
+            label={isSubmitting ? "Signing in…" : "Sign in"}
           />
         </form>
       </Card>

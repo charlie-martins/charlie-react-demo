@@ -1,11 +1,11 @@
 // src/components/tasks/TaskList.tsx
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import type { ColumnDef } from '@tanstack/react-table';
-import { Button, Checkbox, Table, Card } from '@/ui';
-import { Pencil, Archive, Trash2 } from 'lucide-react';
-import type { Task } from '@/types/Task';
+import { useMemo } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Button, Checkbox, Table, Card } from "@/ui";
+import { Pencil, Archive, Trash2 } from "lucide-react";
+import type { Task } from "@/types/Task";
 
 interface TaskListProps {
   tasks: Task[];
@@ -26,7 +26,7 @@ export function TaskList({
     () => [
       // Checkbox at start
       {
-        id: 'select',
+        id: "select",
         header: () => null,
         cell: ({ row }) => (
           <Checkbox
@@ -39,15 +39,13 @@ export function TaskList({
       },
       // Title
       {
-        accessorKey: 'title',
-        header: 'Title',
+        accessorKey: "title",
+        header: "Title",
         cell: ({ row }) => {
           const task = row.original;
           return (
             <span
-              className={
-                task.completed ? 'line-through text-muted' : 'text-fg'
-              }
+              className={task.completed ? "line-through text-muted" : "text-fg"}
             >
               {task.title}
             </span>
@@ -56,17 +54,15 @@ export function TaskList({
       },
       // Description
       {
-        accessorKey: 'description',
-        header: 'Description',
+        accessorKey: "description",
+        header: "Description",
         cell: ({ row }) => (
-          <span className="text-xs text-muted">
-            {row.original.description}
-          </span>
+          <span className="text-xs text-muted">{row.original.description}</span>
         ),
       },
       // Actions at end
       {
-        id: 'actions',
+        id: "actions",
         header: () => null,
         cell: ({ row }) => {
           const task = row.original;
@@ -101,7 +97,7 @@ export function TaskList({
         size: 120,
       },
     ],
-    [onToggleComplete, onEdit, onArchive, onDelete]
+    [onToggleComplete, onEdit, onArchive, onDelete],
   );
 
   return (

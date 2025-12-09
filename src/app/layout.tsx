@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { AuthProvider } from '@/lib/AuthContext';
-import { ThemeProvider } from '@/lib/ThemeContext';
-import { ThemeToggle } from '@/components/UI';
-import { AppFrame } from './AppFrame'; // new client component
+import type { Metadata } from "next";
+import "./globals.css";
+import { AuthProvider } from "@/lib/AuthContext";
+import { ThemeProvider } from "@/lib/ThemeContext";
+import { ThemeToggle } from "@/components/UI";
+import { AppFrame } from "./AppFrame"; // new client component
 
 export const metadata: Metadata = {
-  title: 'Demo',
+  title: "Demo",
 };
 
 interface RootLayoutProps {
@@ -19,9 +19,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <AppFrame>
-              {children}
-            </AppFrame>
+            <AppFrame>{children}</AppFrame>
 
             {/* Optional floating theme toggle */}
             <div className="fixed bottom-4 right-4 z-50">

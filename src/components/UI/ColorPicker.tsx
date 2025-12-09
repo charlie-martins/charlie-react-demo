@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useId } from 'react';
-import clsx from 'clsx';
+import { useId } from "react";
+import clsx from "clsx";
 
 interface ColorPickerProps {
   label?: string;
@@ -16,15 +16,15 @@ interface ColorPickerProps {
 }
 
 const defaultColors = [
-  'rgb(236, 72, 153)',  // pink
-  'rgb(168, 85, 247)',  // purple
-  'rgb(59, 130, 246)',  // blue
-  'rgb(34, 197, 94)',   // green
-  'rgb(251, 191, 36)',  // mango
+  "rgb(236, 72, 153)", // pink
+  "rgb(168, 85, 247)", // purple
+  "rgb(59, 130, 246)", // blue
+  "rgb(34, 197, 94)", // green
+  "rgb(251, 191, 36)", // mango
 ];
 
 export const ColorPicker = ({
-  label = 'Choose a label color',
+  label = "Choose a label color",
   colors = defaultColors,
   value,
   onChange,
@@ -35,9 +35,7 @@ export const ColorPicker = ({
 
   return (
     <fieldset className="border-0 p-0 m-0">
-      <legend className="mb-2 text-xs font-medium text-fg">
-        {label}
-      </legend>
+      <legend className="mb-2 text-xs font-medium text-fg">{label}</legend>
 
       <div className="flex items-center gap-3">
         {colors.map((color) => {
@@ -62,8 +60,8 @@ export const ColorPicker = ({
 
               <span
                 className={clsx(
-                  'inline-flex items-center justify-center rounded-full transition-transform',
-                  isSelected ? 'scale-100' : 'opacity-80 hover:scale-105'
+                  "inline-flex items-center justify-center rounded-full transition-transform",
+                  isSelected ? "scale-100" : "opacity-80 hover:scale-105",
                 )}
                 style={
                   isSelected

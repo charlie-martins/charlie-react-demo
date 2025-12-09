@@ -2,7 +2,7 @@
 
 export type TaskId = string;
 
-export type TaskStatus = 'active' | 'completed' | 'archived';
+export type TaskStatus = "active" | "completed" | "archived";
 
 export interface Task {
   id: TaskId;

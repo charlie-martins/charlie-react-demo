@@ -1,11 +1,11 @@
 // src/components/tasks/TaskForm.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { Card, Container, Input, Button } from '@/ui';
-import { Plus } from 'lucide-react';
-import type { NewTaskInput } from '@/types/Task';
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { Card, Container, Input, Button } from "@/ui";
+import { Plus } from "lucide-react";
+import type { NewTaskInput } from "@/types/Task";
 
 interface TaskFormProps {
   onSubmit: (values: NewTaskInput) => void;
@@ -16,12 +16,14 @@ interface TaskFormProps {
 
 export function TaskForm({
   onSubmit,
-  submitLabel = 'Add task',
+  submitLabel = "Add task",
   isSubmitting = false,
   initialValues,
 }: TaskFormProps) {
-  const [title, setTitle] = useState(initialValues?.title ?? '');
-  const [description, setDescription] = useState(initialValues?.description ?? '');
+  const [title, setTitle] = useState(initialValues?.title ?? "");
+  const [description, setDescription] = useState(
+    initialValues?.description ?? "",
+  );
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -40,8 +42,8 @@ export function TaskForm({
     onSubmit(payload);
 
     // Reset simple path after submit
-    setTitle('');
-    setDescription('');
+    setTitle("");
+    setDescription("");
     setShowAdvanced(false);
   };
 
@@ -79,7 +81,7 @@ export function TaskForm({
             type="button"
             text
             soft
-            label={showAdvanced ? 'Hide advanced' : 'Advanced'}
+            label={showAdvanced ? "Hide advanced" : "Advanced"}
             onClick={() => setShowAdvanced((prev) => !prev)}
           />
         </Container>

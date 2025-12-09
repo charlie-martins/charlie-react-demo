@@ -1,5 +1,5 @@
 // src/components/UI/Table.tsx
-'use client';
+"use client";
 
 import {
   type ColumnDef,
@@ -8,8 +8,8 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
   useReactTable,
-} from '@tanstack/react-table';
-import { Search } from '@/ui';
+} from "@tanstack/react-table";
+import { Search } from "@/ui";
 
 export interface TableProps<TData> {
   data: TData[];
@@ -35,8 +35,8 @@ export function Table<TData>({
   data,
   columns,
   filterColumnId,
-  filterPlaceholder = 'Filter…',
-  emptyMessage = 'No rows to display.',
+  filterPlaceholder = "Filter…",
+  emptyMessage = "No rows to display.",
   className,
 }: TableProps<TData>) {
   const table = useReactTable({
@@ -52,10 +52,10 @@ export function Table<TData>({
     : undefined;
 
   const filterValue =
-    (filterColumn?.getFilterValue() as string | undefined) ?? '';
+    (filterColumn?.getFilterValue() as string | undefined) ?? "";
 
   return (
-    <div className={['w-full', className].filter(Boolean).join(' ')}>
+    <div className={["w-full", className].filter(Boolean).join(" ")}>
       {/* Default filter: your Search, full width */}
       {filterColumn && (
         <div className="mb-3">
@@ -84,7 +84,7 @@ export function Table<TData>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </th>
                 ))}
@@ -98,14 +98,8 @@ export function Table<TData>({
                 className="border-b border-border-subtle/60 last:border-b-0"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className="px-3 py-2 align-middle"
-                  >
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
+                  <td key={cell.id} className="px-3 py-2 align-middle">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
               </tr>

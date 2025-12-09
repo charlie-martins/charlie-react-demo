@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/UI/Button';
-import { useTheme } from '@/lib/ThemeContext';
+import { Button } from "@/components/UI/Button";
+import { useTheme } from "@/lib/ThemeContext";
 // import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
-import { SunMoon } from 'lucide-react';
+import { SunMoon } from "lucide-react";
 
 export const ThemeToggle = () => {
   const { resolvedTheme, toggleTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
+  const isDark = resolvedTheme === "dark";
 
   const icon = <SunMoon size={24} />;
-  const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+  const label = isDark ? "Switch to light mode" : "Switch to dark mode";
 
   return (
     <Button

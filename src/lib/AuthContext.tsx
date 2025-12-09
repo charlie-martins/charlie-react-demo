@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   type User,
-} from 'firebase/auth';
+} from "firebase/auth";
 import {
   createContext,
   useContext,
   useEffect,
   useState,
   type ReactNode,
-} from 'react';
-import { auth } from './firebaseClient';
+} from "react";
+import { auth } from "./firebaseClient";
 
 type AuthContextValue = {
   user: User | null;
@@ -62,7 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 export function useAuth(): AuthContextValue {
   const ctx = useContext(AuthContext);
   if (!ctx) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return ctx;
 }
