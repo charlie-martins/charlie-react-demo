@@ -10,9 +10,12 @@ export interface ButtonProps
   fullWidth?: boolean;
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
-  iconOnly?: boolean; // true = square icon button
+  iconOnly?: boolean; // true = square icon button (if not plain)
   eventName?: string; // reserved for analytics
   eventTags?: string[]; // reserved for analytics
+
+  /** Render as a plain icon/button with no ui-btn chrome */
+  plain?: boolean;
 
   /** Variant flags: use exactly one of these in practice, e.g. <Button primary /> */
   primary?: boolean;
@@ -31,6 +34,7 @@ export const Button = ({
   iconOnly = false,
   eventName,
   eventTags,
+  plain,
   primary,
   soft,
   ghost,
@@ -42,7 +46,7 @@ export const Button = ({
   void eventName;
   void eventTags;
 
-  // Resolve variant class based on boolean flags. First truthy wins, otherwise default to primary.
+  // Resolve variant class based on boolean flags. Last truthy wins, otherwise default to primary.
   let variantClass = 'ui-btn-primary';
 
   if (soft) {
@@ -61,9 +65,13 @@ export const Button = ({
     variantClass = 'ui-btn-primary';
   }
 
-  const widthClass = fullWidth && !iconOnly ? 'w-full' : '';
-
+  // Icon-only if:
+  // - you gave an icon, and
+  // - either explicitly set iconOnly OR didn't provide a label
   const isIconOnly = !!icon && (iconOnly || !label);
+
+  // Only allow full-width when this is not icon-only
+  const widthClass = fullWidth && !isIconOnly ? 'w-full' : '';
 
   const iconWrapperClass =
     'inline-flex items-center justify-center text-[16px] leading-none';
@@ -87,20 +95,28 @@ export const Button = ({
       </span>
     );
 
-  const shapeClass = isIconOnly ? 'p-0 h-9 w-9 aspect-square' : '';
+  // Square shape only for styled icon-only buttons (not for plain)
+  const shapeClass = !plain && isIconOnly ? 'p-0 h-9 w-9 aspect-square' : '';
+
+  // Base class depends on plain vs styled button
+  const baseClass = plain
+    ? 'inline-flex items-center justify-center'
+    : 'ui-btn';
+
+  const finalClassName = [
+    baseClass,
+    !plain && variantClass,
+    !plain && widthClass,
+    !plain && shapeClass,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <button
       {...rest}
-      className={[
-        'ui-btn',
-        variantClass,
-        widthClass,
-        shapeClass,
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      className={finalClassName}
     >
       {content}
     </button>

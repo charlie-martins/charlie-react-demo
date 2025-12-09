@@ -1,26 +1,20 @@
 'use client';
 
-import { Button } from '@/components/UI/Button';
-import { Card } from '@/components/UI/Card';
-import { Input } from '@/components/UI/Input';
-import { ColorPicker } from '@/components/UI/ColorPicker';
+import { Button, Card, Input, ColorPicker } from "@/ui"
 import { useState } from 'react';
+import { Plus as PlusIcon} from 'lucide-react';
+import { Container } from "@/ui";
 
-const PlusIcon = () => (
-  <span className="inline-flex items-center justify-center text-[18px] leading-none">
-    +
-  </span>
-);
+
 
 export default function HomePage() {
 
     const [color, setColor] = useState('rgb(251, 191, 36)'); // mango default
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4">
-   
+    <Container className="flex items-center justify-center p-4">
 
-      <Card className="w-full max-w-lg space-y-6">
+      <Card className="space-y-4">
         <header className="space-y-1">
           <h1 className="text-base font-semibold">UI Component Showcase</h1>
           <p className="text-xs text-muted">
@@ -132,6 +126,6 @@ export default function HomePage() {
         </section>
 
       </Card>
-    </main>
+    </Container>
   );
 }
