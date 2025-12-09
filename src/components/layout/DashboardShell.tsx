@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Container } from "@/ui";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
@@ -34,6 +34,20 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const matchingNavItems = navItems.filter((item) => {
+    return (
+      pathname === item.href || pathname.startsWith(item.href + "/") // for nested routes
+    );
+  });
+
+  // Prefer the longest href (most specific)
+  const currentNavItem =
+    matchingNavItems.sort((a, b) => b.href.length - a.href.length)[0] ??
+    navItems[0];
+
+  const pageTitle = currentNavItem.label;
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -60,7 +74,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
         {/* SCROLLABLE CONTENT ROW */}
         <div className="flex-1 min-h-0 overflow-y-auto">
           <div className="flex items-center justify-center  px-4 py-6 sm:px-6 lg:px-8">
-            {children}
+            <Container direction="column" className="w-xl gap-4">
+              <h1 className="text-lg font-semibold">{pageTitle}</h1>
+
+              {children}
+            </Container>
           </div>
         </div>
       </Container>

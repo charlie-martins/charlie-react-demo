@@ -20,9 +20,7 @@ export default function ArchivePage() {
   }
 
   return (
-    <Container direction="column" className="w-lg gap-4">
-      <h1 className="text-lg font-semibold">Archive</h1>
-
+    <>
       <TaskList
         tasks={archivedTasks}
         onToggleComplete={toggleComplete}
@@ -30,6 +28,6 @@ export default function ArchivePage() {
         onArchive={unarchiveTask} // same button, different meaning here
         onDelete={deleteTask}
       />
-    </Container>
+    </>
   );
 }

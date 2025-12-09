@@ -17,7 +17,7 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <Container direction="column" className="w-lg gap-4">
+      <Container direction="column" className="w-xl gap-4">
         <h1 className="text-lg font-semibold">Dashboard</h1>
         <p className="text-sm text-muted">Please sign in to see your tasks.</p>
       </Container>
@@ -25,9 +25,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <Container direction="column" className="w-lg gap-4">
-      <h1 className="text-lg font-semibold">Dashboard</h1>
-
+    <>
       <TaskForm onSubmit={addTask} submitLabel="Add task" />
 
       <TaskList
@@ -37,6 +35,6 @@ export default function DashboardPage() {
         onArchive={archiveTask}
         onDelete={deleteTask}
       />
-    </Container>
+    </>
   );
 }
