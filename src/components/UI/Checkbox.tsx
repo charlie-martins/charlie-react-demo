@@ -30,7 +30,7 @@ export const Checkbox = ({
   const boxClasses = clsx(
     "flex h-4 w-4 items-center justify-center",
     "rounded-[4px]",
-    "border border-border-subtle bg-surface",
+    "border bg-surface",
     "transition-colors duration-150",
     "peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-accent",
     "peer-checked:bg-accent peer-checked:border-accent",

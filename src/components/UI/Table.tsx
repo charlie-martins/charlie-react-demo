@@ -70,9 +70,9 @@ export function Table<TData>({
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-card border border-border-subtle bg-surface">
+      <div className="overflow-x-auto rounded-card border bg-surface">
         <table className="min-w-full text-sm">
-          <thead className="border-b border-border-subtle">
+          <thead className="border-b">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
