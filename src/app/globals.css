@@ -1,26 +1,176 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Base styles */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-bg text-fg;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "San Francisco", "Segoe UI", sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Make Tailwind's `dark:` variant use [data-theme="dark"] if you ever need it */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Theme tokens: defaults = LIGHT */
+@theme {
+  /* Colors (light) */
+  --color-bg: rgb(243, 244, 246);              /* page background */
+  --color-surface: rgb(249, 250, 251);         /* cards / panels */
+
+  --color-fg: rgb(17, 24, 39);              /* main text */
+  --color-muted: rgb(107, 114, 128);           /* secondary text */
+
+  --color-border-subtle: rgb(229, 231, 235);
+  --color-border-strong: rgb(17, 24, 39);
+
+  --color-accent: rgb(251, 191, 36);          /* mango */
+  --color-accent-soft: rgb(254, 249, 195);     /* soft mango wash */
+
+  --color-danger: rgb(249, 115, 115);
+
+
+  /* Radii (for custom `rounded-*` utilities) */
+  --radius-card: 0.875rem;
+  --radius-input: 0.625rem;
+  --radius-button: 0.5rem;
+
+  /* Shadows (light) */
+  --shadow-elevated: 2px 4px 12px rgba(15, 23, 42, 0.14);
+  --shadow-soft: 2px 3px 8px rgba(15, 23, 42, 0.12);
+  --shadow-outline: 2px 3px 8px rgba(15, 23, 42, 0.10);
+}
+
+
+/* DARK THEME overrides via data-theme
+   This is the important bit: we override the SAME theme variables
+   when html[data-theme="dark"] is present. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg: rgb(44, 44, 44);              /* rgb(44, 44, 44) background */
+  --color-surface: rgb(52, 49, 50);         /* rgb(52, 49, 50) foreground surfaces */
+
+  --color-fg: rgb(229, 231, 235);              /* light text */
+  --color-muted: rgb(156, 163, 175);
+
+  --color-border-subtle: rgb(31, 41, 55);
+  --color-border-strong: rgb(249, 250, 251);
+
+  --color-accent: rgb(251, 191, 36);          /* mango */
+  --color-accent-soft: rgb(254, 249, 195);     /* warmer mango glow */
+
+  --color-danger: rgb(249, 115, 115);
+
+  --shadow-elevated: 2px 4px 14px rgba(255, 255, 255, 0.642);
+  --shadow-soft: 2px 3px 10px rgba(255, 255, 255, 0.575);
+  --shadow-outline: 0 0 0 1px rgba(255, 255, 255, 0.85);
+}
+
+/* Component presets */
+@layer components {
+  /* BUTTONS */
+
+  .ui-btn {
+    @apply inline-flex items-center justify-center
+      rounded-button
+      px-3 py-1.5
+      text-xs font-medium
+      transition-colors duration-150
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+      focus-visible:ring-offset-2 focus-visible:ring-offset-bg
+      disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .ui-btn-primary {
+    @apply bg-accent text-bg shadow-soft hover:bg-accent/90;
+    transition: box-shadow 150ms ease, background-color 150ms ease;
+
+    &:hover {
+      box-shadow: 1px 2px 4px rgba(251, 191, 36, 0.2);
+    }
+  }
+
+  .ui-btn-soft {
+    @apply bg-accent-soft shadow-soft text-black hover:bg-accent-soft/80;
+    transition: box-shadow 150ms ease, background-color 150ms ease;
+    &:hover {
+      box-shadow: 1px 2px 4px rgba(251, 191, 36, 0.18);
+    }
+  }
+ 
+
+  /* Ghost = neutral, low priority, no hover anim */
+  .ui-btn-ghost {
+    @apply bg-transparent
+      text-fg
+      border border-border-strong;
+      opacity: 0.20;
+  }
+
+  /* Outline = neutral outline, theme-driven, with subtle hover */
+  .ui-btn-outline {
+    @apply bg-transparent
+      text-fg
+      border border-border-strong;
+      transition: box-shadow 150ms ease, background-color 150ms ease;
+
+    &:hover {
+      @apply bg-surface/70;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+    }
+
+    :root[data-theme='dark'] & {
+      &:hover {
+        box-shadow: 0 0 0 1px rgba(249, 250, 251, 0.25);
+        background-color: rgba(249, 250, 251, 0.05);
+      }
+    }
+  }
+
+  .ui-btn-danger {
+    @apply bg-danger shadow-soft hover:bg-danger/90;
+    color: #f9fafb; /* light text in both light and dark mode */
+    transition: box-shadow 150ms ease, background-color 150ms ease;
+    &:hover {
+      box-shadow: 1px 1.5px 4px rgba(249, 115, 115, 0.22);
+    }
+  }
+
+  /* INPUTS */
+
+ .ui-input {
+  @apply w-full
+    rounded-input
+    border border-muted
+    bg-surface
+    px-3 py-2
+    text-sm text-fg
+    placeholder:text-muted
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+    focus-visible:border-transparent;
+}
+
+  .ui-input-label {
+    @apply text-xs font-medium text-muted;
+  }
+
+  .ui-input-helper {
+    @apply text-xs text-muted;
+  }
+
+  /* CARD */
+
+  .ui-card {
+    @apply rounded-card
+      bg-surface
+      p-6
+      shadow-elevated;
+  }
+
+
 }
