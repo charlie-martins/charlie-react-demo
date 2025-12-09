@@ -4,6 +4,7 @@ export * from './Card';
 export * from './ColorPicker';
 export * from './ThemeToggle';
 export * from './Container';
+export * from './Search';
 // export * from './Navbar';
 // export * from './Footer';
 // export * from './Modal';

@@ -10,9 +10,9 @@ import { Settings, Calendar1, Archive, House, ListTodo, Cat  } from 'lucide-reac
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: House },
     { href: '/dashboard/tasks', label: 'Tasks', icon: ListTodo },
-    { href: '/dashboard/archive', label: 'Archive', icon: Archive },
     { href: '/dashboard/calendar', label: 'Calendar', icon: Calendar1 },
     { href: '/dashboard/settings', label: 'Settings', icon: Settings },
+    { href: '/dashboard/archive', label: 'Archive', icon: Archive },
     { href: '/dashboard/ui', label: 'UI Kit', icon: Cat },
   ];
 
@@ -46,7 +46,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
         {/* SCROLLABLE CONTENT ROW */}
         <div className="flex-1 min-h-0 overflow-y-auto">
-          <div className="p-4">
+          <div className="flex items-center justify-center  px-4 py-6 sm:px-6 lg:px-8">
             {children}
           </div>
         </div>

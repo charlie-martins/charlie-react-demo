@@ -19,20 +19,22 @@
 /* Theme tokens: defaults = LIGHT */
 @theme {
   /* Colors (light) */
-  --color-bg: rgb(243, 244, 246);              /* page background */
-  --color-surface: rgb(249, 250, 251);         /* cards / panels */
+  --color-bg: rgb(243, 244, 246);         /* page background */
+  --color-surface: rgb(249, 250, 251);    /* cards / panels */
 
-  --color-fg: rgb(17, 24, 39);              /* main text */
-  --color-muted: rgb(107, 114, 128);           /* secondary text */
+  --color-fg: rgb(17, 24, 39);            /* main text */
+  --color-muted: rgb(107, 114, 128);      /* secondary text */
 
   --color-border-subtle: rgb(229, 231, 235);
   --color-border-strong: rgb(17, 24, 39);
 
-  --color-accent: rgb(251, 191, 36);          /* mango */
-  --color-accent-soft: rgb(254, 249, 195);     /* soft mango wash */
+  --color-accent: rgb(251, 191, 36);      /* mango */
+  --color-accent-soft: rgb(254, 249, 195);/* soft mango wash */
 
   --color-danger: rgb(249, 115, 115);
 
+  /* Control height: inputs & buttons share this */
+  --control-height: 2.5rem;               /* 40px, tweak if you want */
 
   /* Radii (for custom `rounded-*` utilities) */
   --radius-card: 0.875rem;
@@ -45,24 +47,21 @@
   --shadow-outline: 2px 3px 8px rgba(15, 23, 42, 0.10);
 }
 
-
-/* DARK THEME overrides via data-theme
-   This is the important bit: we override the SAME theme variables
-   when html[data-theme="dark"] is present. */
+/* DARK THEME overrides via data-theme */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-bg: rgb(44, 44, 44);              /* rgb(44, 44, 44) background */
-  --color-surface: rgb(52, 49, 50);         /* rgb(52, 49, 50) foreground surfaces */
+  --color-bg: rgb(44, 44, 44);            /* background */
+  --color-surface: rgb(52, 49, 50);       /* foreground surfaces */
 
-  --color-fg: rgb(229, 231, 235);              /* light text */
+  --color-fg: rgb(229, 231, 235);         /* light text */
   --color-muted: rgb(156, 163, 175);
 
   --color-border-subtle: rgb(31, 41, 55);
   --color-border-strong: rgb(249, 250, 251);
 
-  --color-accent: rgb(251, 191, 36);          /* mango */
-  --color-accent-soft: rgb(254, 249, 195);     /* warmer mango glow */
+  --color-accent: rgb(251, 191, 36);      /* mango */
+  --color-accent-soft: rgb(254, 249, 195);/* warmer mango glow */
 
   --color-danger: rgb(249, 115, 115);
 
@@ -72,18 +71,25 @@
 }
 
 /* Component presets */
+/* Component presets */
 @layer components {
   /* BUTTONS */
 
   .ui-btn {
     @apply inline-flex items-center justify-center
       rounded-button
-      px-3 py-1.5
+      px-3
       text-xs font-medium
       transition-colors duration-150
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
       focus-visible:ring-offset-2 focus-visible:ring-offset-bg
       disabled:opacity-50 disabled:cursor-not-allowed;
+    height: var(--control-height); /* shared with inputs */
+  }
+
+  /* For styled icon-only buttons (square, no extra padding) */
+  .ui-btn-icon {
+    @apply p-0 aspect-square;
   }
 
   .ui-btn-primary {
@@ -98,18 +104,18 @@
   .ui-btn-soft {
     @apply bg-accent-soft shadow-soft text-black hover:bg-accent-soft/80;
     transition: box-shadow 150ms ease, background-color 150ms ease;
+
     &:hover {
       box-shadow: 1px 2px 4px rgba(251, 191, 36, 0.18);
     }
   }
- 
 
   /* Ghost = neutral, low priority, no hover anim */
   .ui-btn-ghost {
     @apply bg-transparent
       text-fg
       border border-border-strong;
-      opacity: 0.20;
+    opacity: 0.20;
   }
 
   /* Outline = neutral outline, theme-driven, with subtle hover */
@@ -117,7 +123,7 @@
     @apply bg-transparent
       text-fg
       border border-border-strong;
-      transition: box-shadow 150ms ease, background-color 150ms ease;
+    transition: box-shadow 150ms ease, background-color 150ms ease;
 
     &:hover {
       @apply bg-surface/70;
@@ -134,8 +140,9 @@
 
   .ui-btn-danger {
     @apply bg-danger shadow-soft hover:bg-danger/90;
-    color: #f9fafb; /* light text in both light and dark mode */
+    color: rgb(249, 250, 251); /* light text in both light and dark mode */
     transition: box-shadow 150ms ease, background-color 150ms ease;
+
     &:hover {
       box-shadow: 1px 1.5px 4px rgba(249, 115, 115, 0.22);
     }
@@ -143,17 +150,19 @@
 
   /* INPUTS */
 
- .ui-input {
-  @apply w-full
-    rounded-input
-    border border-muted
-    bg-surface
-    px-3 py-2
-    text-sm text-fg
-    placeholder:text-muted
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
-    focus-visible:border-transparent;
-}
+  .ui-input {
+    @apply w-full
+      rounded-input
+      border border-muted
+      bg-surface
+      px-3
+      text-sm text-fg
+      placeholder:text-muted
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+      focus-visible:border-transparent;
+    height: var(--control-height);
+    line-height: 1.25rem;
+  }
 
   .ui-input-label {
     @apply text-xs font-medium text-muted;
@@ -161,6 +170,10 @@
 
   .ui-input-helper {
     @apply text-xs text-muted;
+  }
+
+  .ui-input-icon {
+    @apply h-4 w-4 text-muted;
   }
 
   /* CARD */
@@ -171,6 +184,4 @@
       p-6
       shadow-elevated;
   }
-
-
 }
