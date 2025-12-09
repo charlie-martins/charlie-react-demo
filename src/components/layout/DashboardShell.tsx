@@ -1,20 +1,29 @@
-// src/components/layout/DashboardShell.tsx
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
 import { Container } from '@/ui';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
-import { Settings, Calendar1, Archive, House, ListTodo, Cat  } from 'lucide-react';
+import {
+  // Settings, 
+  // Calendar1, 
+  Archive,
+  House,
+  // ListTodo,
+  Cat
+} from 'lucide-react';
 
-  const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: House },
-    { href: '/dashboard/tasks', label: 'Tasks', icon: ListTodo },
-    { href: '/dashboard/calendar', label: 'Calendar', icon: Calendar1 },
-    { href: '/dashboard/settings', label: 'Settings', icon: Settings },
-    { href: '/dashboard/archive', label: 'Archive', icon: Archive },
-    { href: '/dashboard/ui', label: 'UI Kit', icon: Cat },
-  ];
+const navItems = [
+  { href: '/dashboard', label: 'Dashboard', icon: House },
+  // { href: '/dashboard/tasks', label: 'Tasks', icon: ListTodo },
+  // { href: '/dashboard/calendar', label: 'Calendar', icon: Calendar1 },
+  // { href: '/dashboard/settings', label: 'Settings', icon: Settings },
+  { href: '/dashboard/archive', label: 'Archive', icon: Archive },
+  { href: '/dashboard/ui', label: 'UI Kit', icon: Cat },
+];
 
 interface DashboardShellProps {
   children: ReactNode;
@@ -24,6 +33,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+  const router = useRouter();
+
+const handleLogout = async () => {
+  await signOut(auth);
+  router.replace('/login');
+};
 
   return (
     <Container
@@ -32,7 +47,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       className="bg-bg text-fg h-screen overflow-hidden"
     >
       {/* LEFT COLUMN – sidebar */}
-      <Sidebar isOpen={sidebarOpen} menuData={navItems} />
+      <Sidebar isOpen={sidebarOpen} menuData={navItems} onLogout={handleLogout}/>
 
       {/* RIGHT COLUMN – header + scrollable content */}
       <Container

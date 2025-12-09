@@ -1,13 +1,17 @@
 'use client';
 
-import { Input } from "./Input";
-import { Search as SearchIcon} from "lucide-react";
+import type { InputHTMLAttributes } from 'react';
+import { Input } from '@/ui';
+import { Search as SearchIcon } from 'lucide-react';
 
-export const Search = () => {
+type SearchProps = InputHTMLAttributes<HTMLInputElement>;
+
+export const Search = ({ placeholder, ...rest }: SearchProps) => {
   return (
     <Input
-      placeholder="Search..."
+      placeholder={placeholder ?? 'Search...'}
       icon={SearchIcon}
+      {...rest}
     />
   );
-}
+};

@@ -10,6 +10,7 @@
     "firebase": "firebase emulators:start"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
     "clsx": "^2.1.1",
     "firebase": "^12.6.0",
     "lucide-react": "^0.556.0",

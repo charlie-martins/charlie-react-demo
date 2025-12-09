@@ -1,22 +1,44 @@
 'use client';
 
-import { Search, Container } from "@/components/UI";
-import { TaskForm } from "@/components/tasks/TaskForm";
+import { Container } from '@/ui';
+import { TaskForm } from '@/components/tasks/TaskForm';
+import { TaskList } from '@/components/tasks/TaskList';
+import { useTasks } from '@/hooks/useTasks';
 
-export default function DashboardHome() {
-  return (
-    <div className="max-w-lg w-full gap-4 flex flex-col">
+export default function DashboardPage() {
+  const {
+    user,
+    activeTasks,
+    addTask,
+    toggleComplete,
+    archiveTask,
+    deleteTask,
+  } = useTasks();
 
-
-
-      <TaskForm
-        onSubmit={(values) => {
-          console.log('Submitted task:', values);
-        }}
-      />
-            <Container>
-        <Search />
+  if (!user) {
+    return (
+      <Container direction="column" className="w-lg gap-4">
+        <h1 className="text-lg font-semibold">Dashboard</h1>
+        <p className="text-sm text-muted">
+          Please sign in to see your tasks.
+        </p>
       </Container>
-    </div>
+    );
+  }
+
+  return (
+    <Container direction="column" className="w-lg gap-4">
+      <h1 className="text-lg font-semibold">Dashboard</h1>
+
+      <TaskForm onSubmit={addTask} submitLabel="Add task" />
+
+      <TaskList
+        tasks={activeTasks}
+        onToggleComplete={toggleComplete}
+        onEdit={(id) => console.log('Edit task', id)}
+        onArchive={archiveTask}
+        onDelete={deleteTask}
+      />
+    </Container>
   );
 }

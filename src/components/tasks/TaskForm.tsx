@@ -5,29 +5,23 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Card, Container, Input, Button } from '@/ui';
 import { Plus } from 'lucide-react';
-
-interface TaskFormValues {
-  title: string;
-  description: string;
-}
+import type { NewTaskInput } from '@/types/Task';
 
 interface TaskFormProps {
-  initialValues?: Partial<TaskFormValues>;
-  onSubmit: (values: TaskFormValues) => void;
+  onSubmit: (values: NewTaskInput) => void;
   submitLabel?: string;
   isSubmitting?: boolean;
+  initialValues?: Partial<NewTaskInput>;
 }
 
 export function TaskForm({
-  initialValues,
   onSubmit,
   submitLabel = 'Add task',
   isSubmitting = false,
+  initialValues,
 }: TaskFormProps) {
   const [title, setTitle] = useState(initialValues?.title ?? '');
-  const [description, setDescription] = useState(
-    initialValues?.description ?? ''
-  );
+  const [description, setDescription] = useState(initialValues?.description ?? '');
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -36,18 +30,19 @@ export function TaskForm({
     const trimmedTitle = title.trim();
     const trimmedDescription = description.trim();
 
-    if (!trimmedTitle) {
-      return;
-    }
+    if (!trimmedTitle) return;
 
-    onSubmit({
+    const payload: NewTaskInput = {
       title: trimmedTitle,
-      description: trimmedDescription,
-    });
+      description: trimmedDescription || undefined,
+    };
 
-    // You can decide later if this should clear fields or not
-    // setTitle('');
-    // setDescription('');
+    onSubmit(payload);
+
+    // Reset simple path after submit
+    setTitle('');
+    setDescription('');
+    setShowAdvanced(false);
   };
 
   const disabled = isSubmitting;
@@ -79,10 +74,7 @@ export function TaskForm({
         </Container>
 
         {/* Advanced toggle */}
-        <Container
-          direction="row"
-          className="items-center justify-between"
-        >
+        <Container direction="row" className="items-center justify-between">
           <Button
             type="button"
             text
@@ -103,14 +95,16 @@ export function TaskForm({
                 id="description"
                 name="description"
                 placeholder="Optional details about this task"
-                className="ui-input min-h-[80px] resize-none p-4"
+                className="ui-input min-h-[80px] resize-none"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={disabled}
                 maxLength={400}
               />
             </div>
-
+            <p className="ui-input-helper">
+              Max 400 characters. You can keep this short for now.
+            </p>
           </Container>
         )}
       </form>
