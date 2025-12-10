@@ -9,6 +9,7 @@
   body {
     @apply bg-bg text-fg;
     font-family:
+      var(--font-sans),
       system-ui,
       -apple-system,
       BlinkMacSystemFont,
@@ -16,6 +17,7 @@
       "San Francisco",
       "Segoe UI",
       sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 

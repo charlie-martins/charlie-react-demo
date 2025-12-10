@@ -72,6 +72,8 @@ export function TaskForm({
             iconOnly
             aria-label={submitLabel}
             disabled={disabled}
+            eventName="task_add_click"
+            eventTags={["task_form"]}
           />
         </Container>
 
@@ -83,6 +85,11 @@ export function TaskForm({
             soft
             label={showAdvanced ? "Hide advanced" : "Advanced"}
             onClick={() => setShowAdvanced((prev) => !prev)}
+            eventName="task_form_toggle_advanced"
+            eventTags={[
+              "task_form",
+              showAdvanced ? "hide_advanced" : "show_advanced",
+            ]}
           />
         </Container>
 

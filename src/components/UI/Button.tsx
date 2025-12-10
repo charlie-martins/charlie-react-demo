@@ -1,6 +1,7 @@
 "use client";
 
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode, MouseEvent } from "react";
+import { usePostHog } from "posthog-js/react";
 
 export type ButtonVariant = "primary" | "soft" | "ghost" | "outline" | "danger";
 
@@ -43,38 +44,61 @@ export const Button = ({
   ghost,
   outline,
   danger,
+  onClick,
   ...rest
 }: ButtonProps) => {
-  // reserved for future analytics
-  void eventName;
-  void eventTags;
+  const posthog = usePostHog();
 
   const isTextMode = !!text;
   const isPlainMode = !!plain;
 
   // Variant resolution for normal buttons
   let variantClass = "ui-btn-primary";
+  let variant: ButtonVariant = "primary";
 
   if (soft) {
     variantClass = "ui-btn-soft";
+    variant = "soft";
   }
   if (ghost) {
     variantClass = "ui-btn-ghost";
+    variant = "ghost";
   }
   if (outline) {
     variantClass = "ui-btn-outline";
+    variant = "outline";
   }
   if (danger) {
     variantClass = "ui-btn-danger";
+    variant = "danger";
   }
   if (primary) {
     variantClass = "ui-btn-primary";
+    variant = "primary";
   }
 
   // Icon-only if:
   // - there is an icon, and
   // - either iconOnly is true OR no label is provided
   const isIconOnly = !!icon && (iconOnly || !label);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (eventName && posthog) {
+      posthog.capture(eventName, {
+        tags: eventTags,
+        variant,
+        iconOnly: isIconOnly,
+        fullWidth: !!fullWidth,
+        textMode: isTextMode,
+        plainMode: isPlainMode,
+        component: "Button",
+      });
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
 
   // Full-width only makes sense for non-icon-only, non-plain buttons
   const widthClass = fullWidth && !isIconOnly && !isPlainMode ? "w-full" : "";
@@ -137,7 +161,7 @@ export const Button = ({
     .join(" ");
 
   return (
-    <button {...rest} className={finalClassName}>
+    <button {...rest} onClick={handleClick} className={finalClassName}>
       {content}
     </button>
   );
