@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
-import { Container } from "@/ui";
+import { Container, Stack } from "@/ui";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import {
@@ -73,12 +73,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
         {/* SCROLLABLE CONTENT ROW */}
         <div className="flex-1 min-h-0 overflow-y-auto">
-          <div className="flex items-center justify-center  px-4 py-6 sm:px-6 lg:px-8">
-            <Container direction="column" className="w-xl gap-4">
-              <h1 className="text-lg font-semibold">{pageTitle}</h1>
-
-              {children}
-            </Container>
+          <div className="flex items-center justify-center  py-6 sm:px-6 lg:px-8">
+            <Stack title={pageTitle}>{children}</Stack>
           </div>
         </div>
       </Container>

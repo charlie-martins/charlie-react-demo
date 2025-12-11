@@ -164,6 +164,16 @@
     }
   }
 
+  /* Text-only buttons: no padding, inherit bg; color driven by variant */
+  .ui-btn-text {
+    @apply inline-flex items-center justify-center text-xs font-medium px-0 py-0;
+  }
+
+  /* Plain buttons: icon/label only, no spacing or chrome */
+  .ui-btn-plain {
+    @apply inline-flex items-center justify-center text-xs;
+  }
+
   /* INPUTS */
 
   .ui-input {

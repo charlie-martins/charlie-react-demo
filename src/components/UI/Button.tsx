@@ -143,9 +143,9 @@ export const Button = ({
   }
 
   const baseClass = isPlainMode
-    ? "inline-flex items-center justify-center text-xs"
+    ? "ui-btn-plain"
     : isTextMode
-      ? "inline-flex items-center justify-center text-xs font-medium"
+      ? "ui-btn-text"
       : "ui-btn";
 
   const finalClassName = [

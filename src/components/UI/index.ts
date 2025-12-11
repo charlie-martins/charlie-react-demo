@@ -7,6 +7,7 @@ export * from "./Container";
 export * from "./Search";
 export * from "./Table";
 export * from "./Checkbox";
+export * from "./Stack";
 // export * from './Navbar';
 // export * from './Footer';
 // export * from './Modal';

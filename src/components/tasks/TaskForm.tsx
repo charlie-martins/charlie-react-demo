@@ -50,7 +50,7 @@ export function TaskForm({
   const disabled = isSubmitting;
 
   return (
-    <Card className="w-full max-w-xl">
+    <Card className="w-full">
       <form onSubmit={handleSubmit} className="space-y-3">
         {/* Simple mode: title + add icon inline */}
         <Container direction="row" className="items-end gap-2">
@@ -104,16 +104,14 @@ export function TaskForm({
                 id="description"
                 name="description"
                 placeholder="Optional details about this task"
-                className="ui-input min-h-[80px] resize-none"
+                className="ui-input min-h-[80px] resize-none p-2"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={disabled}
                 maxLength={400}
               />
             </div>
-            <p className="ui-input-helper">
-              Max 400 characters. You can keep this short for now.
-            </p>
+            <p className="ui-input-helper">Max 400 characters.</p>
           </Container>
         )}
       </form>
