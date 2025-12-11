@@ -6,6 +6,7 @@ import type { FormEvent } from "react";
 import { Card, Container, Input, Button } from "@/ui";
 import { Plus } from "lucide-react";
 import type { NewTaskInput } from "@/types/Task";
+import { useAnalytics } from "@/lib/useAnalytics";
 
 interface TaskFormProps {
   onSubmit: (values: NewTaskInput) => void;
@@ -25,6 +26,7 @@ export function TaskForm({
     initialValues?.description ?? "",
   );
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const analytics = useAnalytics();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +42,17 @@ export function TaskForm({
     };
 
     onSubmit(payload);
+
+    const now = new Date();
+    analytics.taskAddSubmit({
+      has_description: !!trimmedDescription,
+      description_length: trimmedDescription.length,
+      has_category: false,
+      category: null,
+      has_due_date: false,
+      due_date_offset_days: null,
+      title_length: trimmedTitle.length,
+    });
 
     // Reset simple path after submit
     setTitle("");
@@ -84,7 +97,11 @@ export function TaskForm({
             text
             soft
             label={showAdvanced ? "Hide advanced" : "Advanced"}
-            onClick={() => setShowAdvanced((prev) => !prev)}
+            onClick={() => {
+              const next = !showAdvanced;
+              setShowAdvanced(next);
+              analytics.taskFormToggleAdvanced(next ? "open" : "closed");
+            }}
             eventName="task_form_toggle_advanced"
             eventTags={[
               "task_form",
