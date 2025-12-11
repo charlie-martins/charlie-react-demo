@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo } from 'react';
-import { usePostHog } from 'posthog-js/react';
-import { useAuth } from './AuthContext';
+import { useEffect, useMemo } from "react";
+import { usePostHog } from "posthog-js/react";
+import { useAuth } from "./AuthContext";
 
 type TaskSubmitPayload = {
   has_description: boolean;
@@ -37,11 +37,11 @@ export function useAnalytics() {
       capture: (event: string, properties?: Record<string, unknown>) => {
         posthog?.capture(event, properties);
       },
-      taskFormToggleAdvanced: (toState: 'open' | 'closed') => {
-        posthog?.capture('task_form_toggle_advanced', { to_state: toState });
+      taskFormToggleAdvanced: (toState: "open" | "closed") => {
+        posthog?.capture("task_form_toggle_advanced", { to_state: toState });
       },
       taskAddSubmit: (payload: TaskSubmitPayload) => {
-        posthog?.capture('task_add_submit', payload);
+        posthog?.capture("task_add_submit", payload);
       },
     }),
     [posthog],
